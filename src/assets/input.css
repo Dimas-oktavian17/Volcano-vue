@@ -1,3 +1,41 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .container {
+        @apply max-w-5xl py-8 mx-auto;
+    }
+
+}
+
+/* hamburger */
+@layer components {
+    .active>div>p:nth-child(1) {
+        @apply origin-bottom-left rotate-45;
+    }
+
+    .navTop {
+        @apply bg-slate-600 transition duration-300 ease-in-out size-4 rounded-sm dark:bg-[#353535]
+    }
+}
+
+@layer components {
+    .active>div>p:nth-child(2) {
+        @apply animate-burger;
+    }
+
+    .navMid {
+        @apply size-4 my-1 transition duration-300 ease-in-out rounded-sm bg-slate-400 dark:bg-[#5e5e5e]
+    }
+}
+
+@layer components {
+    .active>div>p:nth-child(3) {
+        @apply -rotate-[45deg] origin-top-left w-[30px];
+    }
+
+    .navBottom {
+        @apply size-4 transition duration-300 ease-in-out rounded-sm bg-slate-600 dark:bg-[#353535]
+    }
+}
