@@ -6,6 +6,10 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
 
+.peer:checked~.peer-checked:line-through {
+    @apply line-through;
+}
+
 @layer components {
     .container {
         @apply max-w-5xl py-8 mx-auto;

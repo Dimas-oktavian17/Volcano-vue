@@ -3,10 +3,10 @@
 
 <template>
     <div class="flex flex-col items-start lg:w-1/2">
-        <h
+        <h1
             class="font-black leading-none text-center text-transparent dark:from-white dark:to-white dark:font-light lg:text-left text-7xl font-main bg-gradient-to-r from-slate-400 to-slate-900 shadow-slate-500 bg-clip-text">
             Volcano <span class="font-bold">Indonesia</span>
-        </h>
+        </h1>
         <p class="py-4 text-lg font-normal text-center subtitle-dark lg:text-left font-header text-slate-400">
             Merupakan website pencarian gunung berapi yang ada di Indonesia,
             website ini dibuat menggunakan bantuan
