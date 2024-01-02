@@ -5,56 +5,37 @@ import { ref, computed, inject } from 'vue'
 
 const searchInput = ref('')
 const checkboxValue = ref('')
-const heightInput = ref('')
+// const heightInput = ref('')
+const heightMin = ref('')
+const heightMax = ref('')
+const filterHeight = ref(false)
 const data = inject('data', ref([]))
-// const filteringData = computed(() => {
-//     let result = [...data.value]
-//     const lowerCaseSearch = searchInput.value.toLocaleLowerCase()
-//     result = result
-//         .filter(({ nama }) => searchInput.value ? nama.toLowerCase().includes(lowerCaseSearch) : true)
-//         .filter(({ bentuk }) => !checkboxValue.value || new Set(checkboxValue.value).has(bentuk))
-//     // checkboxValue.value
-//     //     ? result = result.filter(({ bentuk }) => new Set(checkboxValue.value).has(bentuk))
-//     //     : result
-//     // !checkboxValue.value || new Set(checkboxValue.value).has(bentuk) ? true
-//     // .filter(({ bentuk }) => !checkboxValue.value ? checkboxValue.value.includes(bentuk) : false)
-//     console.table(result)
-//     return result
-
-// })
-// const filteringData = computed(() => {
-//     const lowerCaseSearch = searchInput.value.toLocaleLowerCase()
-//     const checkedCheckboxValues = checkboxValue.value ? new Set(checkboxValue.value) : new Set()
-
-//     return data.value.filter(({ nama, bentuk, tinggi_meter: height }) =>
-//         (searchInput.value ? nama.toLowerCase().includes(lowerCaseSearch) : true) &&
-//         (checkedCheckboxValues.size === 0 || checkedCheckboxValues.has(bentuk)) && (heightInput.value ? height.toLowerCase().includes(heightInput.value.toLowerCase()) : true)
-//     )
-// })
 const filteringData = computed(() => {
-    const lowerCaseSearch = searchInput.value.toLowerCase()
-    const checkedCheckboxValues = checkboxValue.value ? new Set(checkboxValue.value) : new Set()
+    let result = [...data.value]
+    const lowerCaseSearch = searchInput.value.toLocaleLowerCase()
+    result = result
+        .filter(({ nama, bentuk, tinggi_meter }) => {
+            const validSearch = searchInput.value ? nama.toLowerCase().includes(lowerCaseSearch) : true
+            const validChekbox = !checkboxValue.value || new Set(checkboxValue.value).has(bentuk)
+            const validMin = heightMin.value === '' || parseFloat(tinggi_meter) >= heightMin.value
+            const validMax = heightMax.value === '' || parseFloat(tinggi_meter) <= heightMax.value
+            return validChekbox && validMin && validMax && validSearch
+        })
 
-    return data.value.filter(({ nama, bentuk, tinggi_meter: height }) =>
-        (searchInput.value ? nama.toLowerCase().includes(lowerCaseSearch) : true) &&
-        (checkedCheckboxValues.size === 0 || checkedCheckboxValues.has(bentuk)) &&
-        (
-            (!heightInput.value.min && !heightInput.value.max) ||
-            (!heightInput.value.min && height <= heightInput.value.max) ||
-            (!heightInput.value.max && height >= heightInput.value.min) ||
-            (height >= heightInput.value.min && height <= heightInput.value.max)
-        )
-    )
+    console.table(result)
+    return result
 })
 
-
-const handleHeightFilter = (height) => heightInput.value = height
 
 const searchVolcano = (search) => searchInput.value = search
 const handleFilterDropdown = (filter) => {
     checkboxValue.value = checkboxValue.value.includes(filter) ? checkboxValue.value.filter(bentuk => bentuk !== filter)
         : [...checkboxValue.value, filter]
 }
+const handleMin = (e) => heightMin.value = e.target.value
+
+const handleMax = (e) => heightMax.value = e.target.value
+
 </script>
 <template>
     <main class="">
@@ -81,7 +62,46 @@ const handleFilterDropdown = (filter) => {
                     <div class="flex flex-col items-baseline justify-center shadow">
                         <filterDropdown @filter="handleFilterDropdown" />
                         <!-- filter height high  -->
-                        <filterHeight @filterHeightVolcano="handleHeightFilter" />
+                        <!-- <filterHeight @filterHeightVolcano="handleHeightFilter" /> -->
+                        <button @click="filterHeight = !filterHeight" id="dropdownSearchButton"
+                            data-dropdown-toggle="dropdownSearch"
+                            class="inline-flex items-center px-4 py-2 text-lg font-medium text-center text-black rounded-lg dark:bg-blue-600 "
+                            type="button">
+                            Height
+                            <iconVue
+                                :class="[filterHeight ? 'size-4 ms-2.5  font-bold transition-all' : 'size-4 ms-2.5 rotate-180 font-bold transition-all']"
+                                icon="ep:arrow-up-bold" />
+                        </button>
+                        <div id="dropdownSearch" v-if="filterHeight" class='z-10 flex flex-row items-center px-4'>
+                            <!-- filter height low -->
+                            <div class="w-1/2 py-4 pr-2">
+                                <label for="default-search1"
+                                    class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 flex items-center pointer-events-none start-0 ps-3">
+                                        <iconVue icon="gg:format-line-height"
+                                            class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" />
+                                    </div>
+                                    <input type="number" id="default-search1" @input="handleMin"
+                                        class="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg ps-10 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        placeholder="Height Minimum" required>
+                                </div>
+                            </div>
+                            <!-- filter height height -->
+                            <div class="w-1/2">
+                                <label for="default-search"
+                                    class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 flex items-center pointer-events-none start-0 ps-3">
+                                        <iconVue icon="gg:format-line-height"
+                                            class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" />
+                                    </div>
+                                    <input type="number" id="default-search" @input="handleMax"
+                                        class="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg ps-10 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        placeholder="Height Maximun" required>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </form>
