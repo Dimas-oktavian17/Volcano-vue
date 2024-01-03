@@ -16,12 +16,11 @@ const filteringData = computed(() => {
     result = result
         .filter(({ nama, bentuk, tinggi_meter }) => {
             const validSearch = searchInput.value ? nama.toLowerCase().includes(lowerCaseSearch) : true
-            const validChekbox = !checkboxValue.value || new Set(checkboxValue.value).has(bentuk)
+            const validChekbox = checkboxValue.value.length ? new Set(checkboxValue.value).has(bentuk) : true
             const validMin = heightMin.value === '' || parseFloat(tinggi_meter) >= heightMin.value
             const validMax = heightMax.value === '' || parseFloat(tinggi_meter) <= heightMax.value
             return validChekbox && validMin && validMax && validSearch
         })
-
     console.table(result)
     return result
 })
