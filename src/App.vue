@@ -17,4 +17,5 @@ onMounted(async () => {
 <template>
     <navbarComponent />
     <mainComponent />
+    <footer-vue />
 </template>

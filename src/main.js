@@ -13,6 +13,7 @@ import aboutImage from '@/components/aboutImage.vue'
 import filterSearch from '@/components/filterSearch.vue'
 import filterDropdown from '@/components/filterDropdown.vue'
 import filterHeight from '@/components/filterHeight.vue'
+import footerVue from '@/components/foot.vue'
 
 import { createApp } from 'vue'
 import App from './App.vue'
@@ -31,6 +32,7 @@ app.component('IconVue', Icon)
     .component('filterSearch', filterSearch)
     .component('filterDropdown', filterDropdown)
     .component('filterHeight', filterHeight)
+    .component('footerVue', footerVue)
 
 app.use(autoAnimatePlugin)
 app.mount('body')
