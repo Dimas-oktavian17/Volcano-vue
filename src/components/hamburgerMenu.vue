@@ -1,14 +1,10 @@
 <script setup>
 import { inject } from 'vue'
 defineEmits(['hamburgerToggle'])
-const getStarted = inject('GetStarted', 'mulai')
+
 const hamburger = inject('hamburger')
 </script>
 <template>
-    <button type="button"
-        class="px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-        {{ getStarted }}
-    </button>
     <button @click="$emit('hamburgerToggle')" data-collapse-toggle="navbar-sticky" type="button"
         class="inline-flex flex-col items-center justify-center w-10 h-10 p-2 text-sm text-gray-500 rounded-lg text md:hidden"
         aria-controls="navbar-sticky" aria-expanded="false">
