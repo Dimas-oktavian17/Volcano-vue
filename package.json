@@ -5,13 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "css":"npx tailwindcss -i ./src/assets/input.css -o ./src/assets/output.css --watch",
+    "css": "npx tailwindcss -i ./src/assets/input.css -o ./src/assets/output.css --watch",
     "build": "vite build",
     "preview": "vite preview",
     "test:unit": "vitest"
   },
   "dependencies": {
     "@formkit/auto-animate": "^0.8.1",
+    "axios": "^1.6.5",
     "vue": "^3.3.11",
     "vue-router": "^4.2.5"
   },
