@@ -4,15 +4,15 @@ const isLoading = ref(true)
 const data = ref([])
 const volcano = 'Volcano'
 const getStarted = 'Get started'
-import axios from 'axios'
+import volcanoAPI from '../src/services/volcanoAPI'
 provide('Volcano', volcano)
 provide('GetStarted', getStarted)
 provide('data', data)
 provide('isLoading', isLoading)
 onMounted(async () => {
     try {
-        // isLoading.value = true
-        const response = await axios.get(import.meta.env.VITE_SOME_KEY)
+        isLoading.value = true
+        const response = await volcanoAPI.getVolcano()
         data.value = response.data
     } catch (error) {
         console.error('Error fetching data:', error)

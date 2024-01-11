@@ -22,9 +22,7 @@ const filteringData = computed(() => {
             const validMax = heightMax.value === '' || parseFloat(tinggi_meter) <= heightMax.value
             return validChekbox && validMin && validMax && validSearch
         })
-    console.table(result)
     return result
-
 })
 
 
@@ -40,7 +38,7 @@ const handleMax = (e) => heightMax.value = e.target.value
 </script>
 <template>
     <!-- section result -->
-    <section v-if="isLoading" class="text-2xl text-black flex flex-col items-center justify-center h-screen">
+    <section v-if="isLoading" class="flex flex-col items-center justify-center h-screen text-2xl text-black">
         Loading..
     </section>
     <section v-else class="h-fit scroll-mt-20 items-center lg:flex lg:flex-row lg:items-start lg:gap-[30px] pt-32 pb-28">
@@ -97,13 +95,13 @@ const handleMax = (e) => heightMax.value = e.target.value
                 </div>
             </div>
         </form>
-        <div class="w-full lg:w-1/2 flex flex-col items-center ">
+        <div class="flex flex-col items-center w-full lg:w-1/2 ">
             <ul v-auto-animate>
                 <li v-for="({
                     nama, bentuk, tinggi_meter: height,
                     estimasi_letusan_terakhir, geolokasi, index
                 }) in filteringData" :key="index"
-                    class="max-w-sm p-6 lg:pr-16  mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                    class="max-w-sm p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow lg:pr-16 dark:bg-gray-800 dark:border-gray-700">
                     <!-- <img :src="`../../public/${nama}.jpeg`" alt=""> -->
                     <a href="#">
                         <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
