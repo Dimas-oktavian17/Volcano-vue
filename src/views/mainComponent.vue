@@ -18,14 +18,13 @@ const filteringData = computed(() => {
         .filter(({ nama, bentuk, tinggi_meter }) => {
             const validSearch = searchInput.value ? nama.toLowerCase().includes(lowerCaseSearch) : true
             const validChekbox = checkboxValue.value.length ? new Set(checkboxValue.value).has(bentuk) : true
-            const validMin = heightMin.value === '' || parseFloat(tinggi_meter) >= heightMin.value
-            const validMax = heightMax.value === '' || parseFloat(tinggi_meter) <= heightMax.value
+            const matchRgx = +tinggi_meter.replace(/-?\D+/g, '')
+            const validMin = heightMin.value === '' || matchRgx >= Number(heightMin.value)
+            const validMax = heightMax.value === '' || matchRgx <= Number(heightMax.value)
             return validChekbox && validMin && validMax && validSearch
         })
     return result
 })
-
-
 const searchVolcano = (search) => searchInput.value = search
 const handleFilterDropdown = (filter) => {
     checkboxValue.value = checkboxValue.value.includes(filter) ? checkboxValue.value.filter(bentuk => bentuk !== filter)
