@@ -7,14 +7,14 @@ import darkMode from './components/darkMode.vue'
 import hamburgerMenu from './components/hamburgerMenu.vue'
 import heroText from '@/components/heroText.vue'
 import heroImage from '@/components/heroImage.vue'
-import aboutText from '@/components/aboutText.vue'
-import aboutImage from '@/components/aboutImage.vue'
+const aboutText = defineAsyncComponent(() => import('@/components/aboutText.vue'))
+const aboutImage = defineAsyncComponent(() => import('@/components/aboutImage.vue'))
 import filterSearch from '@/components/filterSearch.vue'
 import filterDropdown from '@/components/filterDropdown.vue'
 import filterHeight from '@/components/filterHeight.vue'
 import footerVue from '@/components/foot.vue'
 
-import { createApp } from 'vue'
+import { createApp, defineAsyncComponent } from 'vue'
 import App from './App.vue'
 
 
